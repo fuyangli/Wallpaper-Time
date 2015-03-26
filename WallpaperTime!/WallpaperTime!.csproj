@@ -75,6 +75,7 @@
     </ApplicationDefinition>
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Utils\Wallpaper.cs" />
+    <Compile Include="Utils\WinApi.cs" />
     <Compile Include="WallpaperTrigger.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

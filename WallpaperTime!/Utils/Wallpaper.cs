@@ -4,6 +4,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
 using System.Runtime.InteropServices;
+using System.Threading;
 using Microsoft.Win32;
 
 namespace WallpaperTime_.Utils
@@ -32,6 +33,33 @@ namespace WallpaperTime_.Utils
             string tempPath = Path.Combine(Path.GetTempPath(), "wallpaper.bmp");
             img.Save(tempPath, ImageFormat.Bmp);
 
+            SetReg(style);
+
+            SystemParametersInfo(SPI_SETDESKWALLPAPER,
+                0,
+                tempPath,
+                SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
+        }
+
+        public static void SetViaShLobj(Uri uri, Style style) {
+
+            WinAPI.EnableActiveDesktop();
+            ThreadStart threadStarter = () =>
+            {
+                WinAPI.IActiveDesktop activeDesktop = WinAPI.ActiveDesktopWrapper.GetActiveDesktop();
+                SetReg(style);
+                activeDesktop.SetWallpaper(uri.AbsolutePath, 0);
+                activeDesktop.ApplyChanges(WinAPI.AD_Apply.ALL | WinAPI.AD_Apply.FORCE);
+                
+                Marshal.ReleaseComObject(activeDesktop);
+            };
+            Thread thread = new Thread(threadStarter);
+            thread.SetApartmentState(ApartmentState.STA); //Set the thread to STA (REQUIRED!!!!)
+            thread.Start();
+            thread.Join(2000);
+        }
+
+        private static void SetReg(Style style) {
             RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop", true);
             if (style == Style.Stretched)
             {
@@ -50,11 +78,6 @@ namespace WallpaperTime_.Utils
                 key.SetValue(@"WallpaperStyle", 1.ToString());
                 key.SetValue(@"TileWallpaper", 1.ToString());
             }
-
-            SystemParametersInfo(SPI_SETDESKWALLPAPER,
-                0,
-                tempPath,
-                SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
         }
     }
 }

@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 using WallpaperTime_.Utils;
 using Xceed.Wpf.DataGrid;
 using Button = System.Windows.Controls.Button;
@@ -16,20 +20,18 @@ namespace WallpaperTime_
     public partial class MainWindow : Window
     {
         public OpenFileDialog FileDialog;
+        public static ObservableCollection<WallpaperTrigger> WallpaperTriggers { get; set; }
+        public string DataGridXmlPath = Path.Combine(Path.GetTempPath(), "wallpapertriggers.xml");
 
         public MainWindow()
         {
             InitializeComponent();
             FileDialog = new OpenFileDialog();
-            WallpaperTriggers = new ObservableCollection<WallpaperTrigger>()
-            {
-                new WallpaperTrigger()
-            };
+            LoadData();
             DataGridConfig.ItemsSource = WallpaperTriggers;
             DataGridConfig.DataContext = WallpaperTriggers;
         }
-
-        public static ObservableCollection<WallpaperTrigger> WallpaperTriggers { get; set; }
+        
 
         private void ButtonUrlPicker(object sender, RoutedEventArgs e)
         {
@@ -48,7 +50,7 @@ namespace WallpaperTime_
         private void ButtonNewRowClick(object sender, RoutedEventArgs e)
         {
             WallpaperTriggers.Add(new WallpaperTrigger());
-        }
+        }   
 
         private void ButtonRemoveRowClick(object sender, RoutedEventArgs e)
         {
@@ -70,5 +72,41 @@ namespace WallpaperTime_
             var wall = button.DataContext as WallpaperTrigger;
             Wallpaper.Set(new Uri(wall.Url), Wallpaper.Style.Stretched);
         }
+
+        private void ButtonSetWallpaper2Click(object sender, RoutedEventArgs e) {
+            var button = sender as Button;
+            if (button == null)
+            {
+                return;
+            }
+            var wall = button.DataContext as WallpaperTrigger;
+            Wallpaper.SetViaShLobj(new Uri(wall.Url), Wallpaper.Style.Stretched);
+        }
+
+        private void Save() {
+            var lockObject = new object();
+            var thread = new Thread(() => {
+                lock (lockObject) {
+                    var serialiser = new XmlSerializer(typeof(ObservableCollection<WallpaperTrigger>));
+                    var writer = new StreamWriter(DataGridXmlPath);
+                    serialiser.Serialize(writer, DataGridConfig.ItemsSource);
+                    writer.Close();
+                }
+                
+            });
+            thread.Start();
+        }
+
+        private void LoadData() {
+            var serialiser = new XmlSerializer(typeof(ObservableCollection<WallpaperTrigger>));
+            var reader = new StreamReader(DataGridXmlPath);
+            WallpaperTriggers = serialiser.Deserialize(reader) as ObservableCollection<WallpaperTrigger>;
+            reader.Close();
+        }
+
+        private void ButtonSaveClick(object sender, RoutedEventArgs e) {
+            Save();
+        }
+
     }
 }

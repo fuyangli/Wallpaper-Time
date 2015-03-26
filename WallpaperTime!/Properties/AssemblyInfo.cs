@@ -51,7 +51,7 @@ using System.Windows;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("15.03.26.01")]
-[assembly: AssemblyFileVersion("15.03.26.01")]
-
+[assembly: AssemblyVersion("15.03.26.02")]
+[assembly: AssemblyFileVersion("15.03.26.02")]
+// 15.03.26.02 - Gabriel Guaitolini - Fixes / todo: interval types
 // 15.03.26.01 - Gabriel Guaitolini - Versioning / DataGrid saving on temp folder

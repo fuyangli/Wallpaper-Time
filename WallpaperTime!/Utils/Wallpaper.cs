@@ -27,10 +27,10 @@ namespace WallpaperTime_.Utils
 
         public static void Set(Uri uri, Style style)
         {
-            Stream s = new WebClient().OpenRead(uri.ToString());
+            var s = new WebClient().OpenRead(uri.ToString());
 
-            Image img = Image.FromStream(s);
-            string tempPath = Path.Combine(Path.GetTempPath(), "wallpaper.bmp");
+            var img = Image.FromStream(s);
+            var tempPath = Path.Combine(Path.GetTempPath(), "wallpaper.bmp");
             img.Save(tempPath, ImageFormat.Bmp);
 
             SetReg(style);
@@ -41,42 +41,43 @@ namespace WallpaperTime_.Utils
                 SPIF_UPDATEINIFILE | SPIF_SENDWININICHANGE);
         }
 
-        public static void SetViaShLobj(Uri uri, Style style) {
+        public static void SetWithFade(Uri uri, Style style) {
 
             WinAPI.EnableActiveDesktop();
             ThreadStart threadStarter = () =>
             {
-                WinAPI.IActiveDesktop activeDesktop = WinAPI.ActiveDesktopWrapper.GetActiveDesktop();
+                var activeDesktop = WinAPI.ActiveDesktopWrapper.GetActiveDesktop();
                 SetReg(style);
                 activeDesktop.SetWallpaper(uri.AbsolutePath, 0);
                 activeDesktop.ApplyChanges(WinAPI.AD_Apply.ALL | WinAPI.AD_Apply.FORCE);
                 
                 Marshal.ReleaseComObject(activeDesktop);
             };
-            Thread thread = new Thread(threadStarter);
+            var thread = new Thread(threadStarter);
             thread.SetApartmentState(ApartmentState.STA); //Set the thread to STA (REQUIRED!!!!)
             thread.Start();
             thread.Join(2000);
         }
 
         private static void SetReg(Style style) {
-            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop", true);
+            var key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop", true);
+
             if (style == Style.Stretched)
             {
-                key.SetValue(@"WallpaperStyle", 2.ToString());
-                key.SetValue(@"TileWallpaper", 0.ToString());
+                key?.SetValue(@"WallpaperStyle", 2.ToString());
+                key?.SetValue(@"TileWallpaper", 0.ToString());
             }
 
             if (style == Style.Centered)
             {
-                key.SetValue(@"WallpaperStyle", 1.ToString());
-                key.SetValue(@"TileWallpaper", 0.ToString());
+                key?.SetValue(@"WallpaperStyle", 1.ToString());
+                key?.SetValue(@"TileWallpaper", 0.ToString());
             }
 
             if (style == Style.Tiled)
             {
-                key.SetValue(@"WallpaperStyle", 1.ToString());
-                key.SetValue(@"TileWallpaper", 1.ToString());
+                key?.SetValue(@"WallpaperStyle", 1.ToString());
+                key?.SetValue(@"TileWallpaper", 1.ToString());
             }
         }
     }

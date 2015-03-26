@@ -6,11 +6,14 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Windows.Input;
 using System.Xml.Serialization;
 using WallpaperTime_.Utils;
 using Xceed.Wpf.DataGrid;
 using Button = System.Windows.Controls.Button;
 using DataGrid = System.Windows.Controls.DataGrid;
+using DataGridCell = System.Windows.Controls.DataGridCell;
+using TextBox = System.Windows.Controls.TextBox;
 
 namespace WallpaperTime_
 {
@@ -43,7 +46,7 @@ namespace WallpaperTime_
             var wall = (button.DataContext as WallpaperTrigger);
             if (FileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                wall.Url = FileDialog.FileName;
+                wall.Path = FileDialog.FileName;
             }
         }
 
@@ -70,7 +73,7 @@ namespace WallpaperTime_
                 return;
             }
             var wall = button.DataContext as WallpaperTrigger;
-            Wallpaper.Set(new Uri(wall.Url), Wallpaper.Style.Stretched);
+            Wallpaper.Set(wall.Url, Wallpaper.Style.Stretched);
         }
 
         private void ButtonSetWallpaper2Click(object sender, RoutedEventArgs e) {
@@ -80,33 +83,44 @@ namespace WallpaperTime_
                 return;
             }
             var wall = button.DataContext as WallpaperTrigger;
-            Wallpaper.SetViaShLobj(new Uri(wall.Url), Wallpaper.Style.Stretched);
+            Wallpaper.SetWithFade(wall.Url, Wallpaper.Style.Stretched);
         }
 
         private void Save() {
-            var lockObject = new object();
-            var thread = new Thread(() => {
-                lock (lockObject) {
-                    var serialiser = new XmlSerializer(typeof(ObservableCollection<WallpaperTrigger>));
-                    var writer = new StreamWriter(DataGridXmlPath);
-                    serialiser.Serialize(writer, DataGridConfig.ItemsSource);
-                    writer.Close();
-                }
+            try {
+                var lockObject = new object();
+                var thread = new Thread(() => {
+                    lock (lockObject) {
+                        var serialiser = new XmlSerializer(typeof(ObservableCollection<WallpaperTrigger>));
+                        var writer = new StreamWriter(DataGridXmlPath);
+                        serialiser.Serialize(writer, DataGridConfig.ItemsSource);
+                        writer.Close();
+                    }
                 
-            });
-            thread.Start();
+                });
+                thread.Start();
+            }
+            catch (Exception e) {
+                Console.WriteLine(e);
+                
+            }
         }
 
         private void LoadData() {
-            var serialiser = new XmlSerializer(typeof(ObservableCollection<WallpaperTrigger>));
-            var reader = new StreamReader(DataGridXmlPath);
-            WallpaperTriggers = serialiser.Deserialize(reader) as ObservableCollection<WallpaperTrigger>;
-            reader.Close();
+            try {
+                var serialiser = new XmlSerializer(typeof(ObservableCollection<WallpaperTrigger>));
+                var reader = new StreamReader(DataGridXmlPath);
+                WallpaperTriggers = serialiser.Deserialize(reader) as ObservableCollection<WallpaperTrigger>;
+                reader.Close();
+            }
+            catch (Exception e) {
+                Console.WriteLine(e);
+                WallpaperTriggers = new ObservableCollection<WallpaperTrigger>();
+            }
         }
 
         private void ButtonSaveClick(object sender, RoutedEventArgs e) {
             Save();
         }
-
     }
 }

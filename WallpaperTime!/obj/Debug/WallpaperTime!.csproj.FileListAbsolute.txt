@@ -27,3 +27,47 @@ C:\Users\gguai_000\documents\visual studio 2012\Projects\WallpaperTime!\Wallpape
 C:\Users\gguai_000\documents\visual studio 2012\Projects\WallpaperTime!\WallpaperTime!\bin\Debug\ru\Xceed.Wpf.AvalonDock.resources.dll
 C:\Users\gguai_000\documents\visual studio 2012\Projects\WallpaperTime!\WallpaperTime!\bin\Debug\sv\Xceed.Wpf.AvalonDock.resources.dll
 C:\Users\gguai_000\documents\visual studio 2012\Projects\WallpaperTime!\WallpaperTime!\bin\Debug\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\WallpaperTime!.exe.config
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\obj\Debug\WallpaperTime!.exe
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\obj\Debug\WallpaperTime!.pdb
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\WallpaperTime!.exe
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\WallpaperTime!.pdb
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\mscorlib.dll
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\Xceed.Wpf.AvalonDock.dll
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\Xceed.Wpf.AvalonDock.Themes.Aero.dll
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\Xceed.Wpf.AvalonDock.Themes.Metro.dll
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\Xceed.Wpf.AvalonDock.Themes.VS2010.dll
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\Xceed.Wpf.DataGrid.dll
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\Xceed.Wpf.Toolkit.dll
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\pt-BR\mscorlib.resources.dll
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\de\Xceed.Wpf.AvalonDock.resources.dll
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\es\Xceed.Wpf.AvalonDock.resources.dll
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\fr\Xceed.Wpf.AvalonDock.resources.dll
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\hu\Xceed.Wpf.AvalonDock.resources.dll
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\it\Xceed.Wpf.AvalonDock.resources.dll
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\pt-BR\Xceed.Wpf.AvalonDock.resources.dll
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\ro\Xceed.Wpf.AvalonDock.resources.dll
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\ru\Xceed.Wpf.AvalonDock.resources.dll
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\sv\Xceed.Wpf.AvalonDock.resources.dll
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\normidna.nlp
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\normnfc.nlp
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\normnfd.nlp
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\normnfkc.nlp
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\normnfkd.nlp
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\obj\Debug\WallpaperTime!.csprojResolveAssemblyReference.cache
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\obj\Debug\MainWindow.baml
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\obj\Debug\MainWindow.g.cs
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\obj\Debug\App.g.cs
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\obj\Debug\WallpaperTime!_MarkupCompile.cache
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\obj\Debug\WallpaperTime!.g.resources
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\obj\Debug\WallpaperTime_.Properties.Resources.resources
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\obj\Debug\WallpaperTime!.csproj.GenerateResource.Cache
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\obj\Debug\WallpaperTime!_MarkupCompile.lref
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\Common.Logging.Core.dll
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\Common.Logging.dll
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\Common.Logging.pdb
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\Common.Logging.xml
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\Common.Logging.Core.pdb
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\Common.Logging.Core.xml

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Threading;
 using System.Windows;
@@ -112,6 +113,15 @@ namespace WallpaperTime_
             }
             var w = button.DataContext as WallpaperTrigger;
             w.SetWallpaper();
+        }
+
+        private void OnClosing(object sender, CancelEventArgs e) {
+            e.Cancel = true;
+            Visibility = Visibility.Hidden;
+        }
+
+        private void OnTrayMouseDoubleClick(object sender, RoutedEventArgs e) {
+            Visibility = Visibility.Visible;
         }
     }
 }

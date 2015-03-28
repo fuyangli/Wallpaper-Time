@@ -5,7 +5,8 @@
         xmlns:controls="clr-namespace:WallpaperTime_.Controls"
         xmlns:utils="clr-namespace:WallpaperTime_.Utils"
         xmlns:wallpaperTime="clr-namespace:WallpaperTime_"
-        Title="MainWindow" Height="350" Width="525">
+        xmlns:tb="http://www.hardcodet.net/taskbar"
+        Title="MainWindow" Height="350" Width="525" Closing="OnClosing">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -15,6 +16,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+        <tb:TaskbarIcon IconSource="Resources/Images/wallpapericon.ico"  ToolTipText="Rodando" TrayMouseDoubleClick="OnTrayMouseDoubleClick"></tb:TaskbarIcon>  
         <DataGrid Margin="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="DataGridConfig"
                   AutoGenerateColumns="False" CanUserAddRows="False" CanUserResizeColumns="False">
             <DataGrid.Columns>

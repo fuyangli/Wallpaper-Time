@@ -51,9 +51,13 @@ using System.Windows;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("15.03.28.01")]
-[assembly: AssemblyFileVersion("15.03.28.01")]
+[assembly: AssemblyVersion("15.03.28.02")]
+[assembly: AssemblyFileVersion("15.03.28.02")]
 /* 
+15.03.28.02 - Gabriel Guaitolini:
+- TrayIcon creation
+- Provisory icon
+
 15.03.28.01 - Gabriel Guaitolini: 
 - New comment format
 - Fix for high resolutions wallpapers

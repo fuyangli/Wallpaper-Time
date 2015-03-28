@@ -56,14 +56,18 @@ namespace WallpaperTime_.Controls
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            if (PropertyChanged != null) PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private static void OnShownValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
             var textbox = d as MyTextBox;
-            textbox.OnPropertyChanged("ShownValue");
-            textbox.OnShownValuePropertyChanged(e);
+            if (textbox != null)
+            {
+                textbox.OnPropertyChanged("ShownValue");
+                textbox.OnShownValuePropertyChanged(e);
+            }
         }
 
         private void OnShownValuePropertyChanged(DependencyPropertyChangedEventArgs e) {
@@ -73,8 +77,11 @@ namespace WallpaperTime_.Controls
         private static void OnHiddenValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var textbox = d as MyTextBox;
-            textbox.OnPropertyChanged("HiddenValue");
-            textbox.OnHiddenValuePropertyChanged(e);
+            if (textbox != null)
+            {
+                textbox.OnPropertyChanged("HiddenValue");
+                textbox.OnHiddenValuePropertyChanged(e);
+            }
         }
 
         private void OnHiddenValuePropertyChanged(DependencyPropertyChangedEventArgs e) {

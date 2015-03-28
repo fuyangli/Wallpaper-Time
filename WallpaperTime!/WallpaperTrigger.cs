@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
+using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 using System.Xml.Serialization;
 using WallpaperTime_.Annotations;
@@ -15,14 +12,9 @@ using WallpaperTime_.Utils;
 namespace WallpaperTime_ {
     [Serializable]
     public class WallpaperTrigger : INotifyPropertyChanged {
+        public WallpaperTrigger() {}
 
-
-        public WallpaperTrigger() {
-
-        }
-
-        [XmlIgnore]
-        private Uri _url;
+        [XmlIgnore] private Uri _url;
 
         [XmlIgnore]
         public Uri Url {
@@ -33,9 +25,27 @@ namespace WallpaperTime_ {
             }
         }
 
+        [XmlIgnore]
+        private Style _style;
+
+        [XmlIgnore]
+        public Style Style {
+            get { return _style; }
+            set {
+                _style = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [XmlElement("Style")]
+        public string StyleString {
+            get { return Style.ToString();  }
+            set { Style = (Style)Enum.Parse(typeof (Style), value); }
+        }
+
         [XmlElement("Path")]
         public string Path {
-            get { return _url?.AbsolutePath ?? (_url = new Uri("C:\\")).AbsolutePath; }
+            get { return _url == null ? (_url = new Uri("C:\\")).AbsolutePath : _url.AbsolutePath; }
             set {
                 Url = new Uri(value);
                 OnPropertyChanged();
@@ -43,20 +53,18 @@ namespace WallpaperTime_ {
             }
         }
 
-        [XmlIgnore]
+        
         public string Name {
             get {
-                
                 return new string(new FileInfo(_url.AbsolutePath).Name.Where(c => (char.IsLetterOrDigit(c) ||
-                             char.IsWhiteSpace(c) ||
-                             c == '-' || c == ',' || c == '.')).ToArray());
+                                                                                   char.IsWhiteSpace(c) ||
+                                                                                   c == '-' || c == ',' || c == '.'))
+                    .ToArray());
             }
         }
 
 
-        [XmlIgnore]
-        private DateTime _time;
-
+        [XmlIgnore] private DateTime _time;
 
 
         [XmlIgnore]
@@ -87,19 +95,24 @@ namespace WallpaperTime_ {
             while (ts.TotalMilliseconds < 0) {
                 t = t.AddDays(1);
                 ts = t - now;
-            } 
+            }
             _timer.Interval = ts.TotalMilliseconds;
-            _timer.Elapsed += (sender, args) => {
-                Wallpaper.SetWithFade(Url, Wallpaper.Style.Stretched);
-            };
+            _timer.Elapsed += (sender, args) => { SetWallpaper(); };
             _timer.AutoReset = true;
             _timer.Start();
         }
 
         public void StopTimer() {
-            _timer?.Stop();
-            _timer?.Dispose();
+            if (_timer == null) {
+                return;
+            }
+            _timer.Stop();
+            _timer.Dispose();
             _timer = null;
+        }
+
+        public void SetWallpaper() {
+            Wallpaper.SetWithFade(Url, Style);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

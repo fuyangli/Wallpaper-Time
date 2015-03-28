@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -12,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Bubble Bear Studios")]
 [assembly: AssemblyProduct("WallpaperTime!")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyCopyright("Copyright �  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -51,7 +51,20 @@ using System.Windows;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("15.03.26.02")]
-[assembly: AssemblyFileVersion("15.03.26.02")]
-// 15.03.26.02 - Gabriel Guaitolini - Fixes / todo: interval types
-// 15.03.26.01 - Gabriel Guaitolini - Versioning / DataGrid saving on temp folder
+[assembly: AssemblyVersion("15.03.28.01")]
+[assembly: AssemblyFileVersion("15.03.28.01")]
+/* 
+15.03.28.01 - Gabriel Guaitolini: 
+- New comment format
+- Fix for high resolutions wallpapers
+- Style choosing option
+- I was a little drunk doing that
+
+15.03.26.02 - Gabriel Guaitolini: 
+- Fixes
+
+15.03.26.01 - Gabriel Guaitolini: 
+- Versioning 
+- DataGrid saving on temp folder
+*/
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          

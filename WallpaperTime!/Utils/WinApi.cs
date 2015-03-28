@@ -58,6 +58,7 @@ namespace WallpaperTime_.Utils
         public struct WALLPAPEROPT
         {
             public static readonly int SizeOf = Marshal.SizeOf(typeof(WALLPAPEROPT));
+            public int Size;
             public WallPaperStyle dwStyle;
         }
 

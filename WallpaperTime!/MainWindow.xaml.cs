@@ -8,7 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Xml.Serialization;
-using WallpaperTime_.Utils;
+using WallpaperTime_;
 using Xceed.Wpf.DataGrid;
 using Button = System.Windows.Controls.Button;
 using DataGrid = System.Windows.Controls.DataGrid;
@@ -62,28 +62,9 @@ namespace WallpaperTime_
             {
                 return;
             }
-            WallpaperTriggers.Remove(button.DataContext as WallpaperTrigger);
-        }
-
-        private void ButtonSetWallpaperClick(object sender, RoutedEventArgs e)
-        {
-            var button = sender as Button;
-            if (button == null)
-            {
-                return;
-            }
-            var wall = button.DataContext as WallpaperTrigger;
-            Wallpaper.Set(wall.Url, Wallpaper.Style.Stretched);
-        }
-
-        private void ButtonSetWallpaper2Click(object sender, RoutedEventArgs e) {
-            var button = sender as Button;
-            if (button == null)
-            {
-                return;
-            }
-            var wall = button.DataContext as WallpaperTrigger;
-            Wallpaper.SetWithFade(wall.Url, Wallpaper.Style.Stretched);
+            var w = button.DataContext as WallpaperTrigger;
+            w.StopTimer();
+            WallpaperTriggers.Remove(w);
         }
 
         private void Save() {
@@ -121,6 +102,16 @@ namespace WallpaperTime_
 
         private void ButtonSaveClick(object sender, RoutedEventArgs e) {
             Save();
+        }
+
+        private void ButtonSetWallpaperClick(object sender, RoutedEventArgs e) {
+            var button = sender as Button;
+            if (button == null)
+            {
+                return;
+            }
+            var w = button.DataContext as WallpaperTrigger;
+            w.SetWallpaper();
         }
     }
 }

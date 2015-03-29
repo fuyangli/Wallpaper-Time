@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Xml.Serialization;
+using Hardcodet.Wpf.TaskbarNotification;
 using WallpaperTime_;
 using Xceed.Wpf.DataGrid;
 using Button = System.Windows.Controls.Button;
@@ -116,11 +117,14 @@ namespace WallpaperTime_
         }
 
         private void OnClosing(object sender, CancelEventArgs e) {
+
             e.Cancel = true;
+            TaskbarIcon.ShowBalloonTip(Properties.Resources.ProgramTitle, Properties.Resources.Running, BalloonIcon.Warning);
             Visibility = Visibility.Hidden;
         }
 
         private void OnTrayMouseDoubleClick(object sender, RoutedEventArgs e) {
+            
             Visibility = Visibility.Visible;
         }
     }

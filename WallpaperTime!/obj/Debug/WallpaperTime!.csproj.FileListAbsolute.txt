@@ -71,3 +71,6 @@ C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\Common.Logging
 C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\Common.Logging.xml
 C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\Common.Logging.Core.pdb
 C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\Common.Logging.Core.xml
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\Hardcodet.Wpf.TaskbarNotification.dll
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\Hardcodet.Wpf.TaskbarNotification.pdb
+C:\dev\Projetos\Wallpaper\Wallpaper-Time\WallpaperTime!\bin\Debug\Hardcodet.Wpf.TaskbarNotification.xml

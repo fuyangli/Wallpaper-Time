@@ -51,9 +51,12 @@ using System.Windows;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("15.03.28.02")]
-[assembly: AssemblyFileVersion("15.03.28.02")]
+[assembly: AssemblyVersion("15.03.28.03")]
+[assembly: AssemblyFileVersion("15.03.28.03")]
 /* 
+15.03.28.03 - Gabriel Guaitolini:
+- Resources created
+
 15.03.28.02 - Gabriel Guaitolini:
 - TrayIcon creation
 - Provisory icon
@@ -71,4 +74,3 @@ using System.Windows;
 - Versioning 
 - DataGrid saving on temp folder
 */
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          

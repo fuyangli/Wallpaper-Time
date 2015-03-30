@@ -117,14 +117,41 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="About" xml:space="preserve">
+    <value>About</value>
+  </data>
   <data name="Add" xml:space="preserve">
     <value>+</value>
+  </data>
+  <data name="Centered" xml:space="preserve">
+    <value>Centered</value>
+  </data>
+  <data name="Copy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="CropToFit" xml:space="preserve">
+    <value>Crop To Fit</value>
+  </data>
+  <data name="Exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="ImageFiles" xml:space="preserve">
+    <value>Image files</value>
   </data>
   <data name="ImgPath" xml:space="preserve">
     <value>Image Path</value>
   </data>
+  <data name="InitializeWithOs" xml:space="preserve">
+    <value>Initialize with windows!</value>
+  </data>
   <data name="Interval" xml:space="preserve">
     <value>Interval</value>
+  </data>
+  <data name="KeepAspect" xml:space="preserve">
+    <value>Keep Aspect</value>
+  </data>
+  <data name="Load" xml:space="preserve">
+    <value>Load</value>
   </data>
   <data name="Minus" xml:space="preserve">
     <value>-</value>
@@ -147,10 +174,22 @@
   <data name="SetNow" xml:space="preserve">
     <value>Set Now!</value>
   </data>
+  <data name="Span" xml:space="preserve">
+    <value>Span</value>
+  </data>
+  <data name="Stretched" xml:space="preserve">
+    <value>Stretched</value>
+  </data>
   <data name="Style" xml:space="preserve">
     <value>Style</value>
   </data>
+  <data name="Tiled" xml:space="preserve">
+    <value>Tiled</value>
+  </data>
   <data name="Time" xml:space="preserve">
     <value>Time</value>
+  </data>
+  <data name="XmlConfig" xml:space="preserve">
+    <value>XML Configuration</value>
   </data>
 </root>

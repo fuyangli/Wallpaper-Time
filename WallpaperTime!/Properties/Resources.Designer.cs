@@ -61,11 +61,65 @@ namespace WallpaperTime_.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        public static string About {
+            get {
+                return ResourceManager.GetString("About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to +.
         /// </summary>
         public static string Add {
             get {
                 return ResourceManager.GetString("Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Centered.
+        /// </summary>
+        public static string Centered {
+            get {
+                return ResourceManager.GetString("Centered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy.
+        /// </summary>
+        public static string Copy {
+            get {
+                return ResourceManager.GetString("Copy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Crop To Fit.
+        /// </summary>
+        public static string CropToFit {
+            get {
+                return ResourceManager.GetString("CropToFit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exit.
+        /// </summary>
+        public static string Exit {
+            get {
+                return ResourceManager.GetString("Exit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image files.
+        /// </summary>
+        public static string ImageFiles {
+            get {
+                return ResourceManager.GetString("ImageFiles", resourceCulture);
             }
         }
         
@@ -79,11 +133,38 @@ namespace WallpaperTime_.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Initialize with windows!.
+        /// </summary>
+        public static string InitializeWithOs {
+            get {
+                return ResourceManager.GetString("InitializeWithOs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Interval.
         /// </summary>
         public static string Interval {
             get {
                 return ResourceManager.GetString("Interval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Keep Aspect.
+        /// </summary>
+        public static string KeepAspect {
+            get {
+                return ResourceManager.GetString("KeepAspect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load.
+        /// </summary>
+        public static string Load {
+            get {
+                return ResourceManager.GetString("Load", resourceCulture);
             }
         }
         
@@ -151,6 +232,24 @@ namespace WallpaperTime_.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Span.
+        /// </summary>
+        public static string Span {
+            get {
+                return ResourceManager.GetString("Span", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stretched.
+        /// </summary>
+        public static string Stretched {
+            get {
+                return ResourceManager.GetString("Stretched", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Style.
         /// </summary>
         public static string Style {
@@ -160,11 +259,29 @@ namespace WallpaperTime_.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tiled.
+        /// </summary>
+        public static string Tiled {
+            get {
+                return ResourceManager.GetString("Tiled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Time.
         /// </summary>
         public static string Time {
             get {
                 return ResourceManager.GetString("Time", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to XML Configuration.
+        /// </summary>
+        public static string XmlConfig {
+            get {
+                return ResourceManager.GetString("XmlConfig", resourceCulture);
             }
         }
     }

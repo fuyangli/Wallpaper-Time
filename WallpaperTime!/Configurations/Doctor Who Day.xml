@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfWallpaperTrigger xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <WallpaperTrigger>
+    <Style>Centered</Style>
+    <Path>C:/</Path>
+    <Time>01/01/0001 00:00:00</Time>
+  </WallpaperTrigger>
+  <WallpaperTrigger>
+    <Style>Centered</Style>
+    <Path>C:/</Path>
+    <Time>01/01/0001 00:00:00</Time>
+  </WallpaperTrigger>
+  <WallpaperTrigger>
+    <Style>Centered</Style>
+    <Path>C:/</Path>
+    <Time>01/01/0001 00:00:00</Time>
+  </WallpaperTrigger>
+  <WallpaperTrigger>
+    <Style>Centered</Style>
+    <Path>C:/</Path>
+    <Time>01/01/0001 00:00:00</Time>
+  </WallpaperTrigger>
+  <WallpaperTrigger>
+    <Style>Centered</Style>
+    <Path>C:/</Path>
+    <Time>01/01/0001 00:00:00</Time>
+  </WallpaperTrigger>
+  <WallpaperTrigger>
+    <Style>Centered</Style>
+    <Path>C:/</Path>
+    <Time>01/01/0001 00:00:00</Time>
+  </WallpaperTrigger>
+  <WallpaperTrigger>
+    <Style>Centered</Style>
+    <Path>C:/</Path>
+    <Time>01/01/0001 00:00:00</Time>
+  </WallpaperTrigger>
+  <WallpaperTrigger>
+    <Style>Centered</Style>
+    <Path>C:/</Path>
+    <Time>01/01/0001 00:00:00</Time>
+  </WallpaperTrigger>
+  <WallpaperTrigger>
+    <Style>Centered</Style>
+    <Path>C:/</Path>
+    <Time>01/01/0001 00:00:00</Time>
+  </WallpaperTrigger>
+  <WallpaperTrigger>
+    <Style>Centered</Style>
+    <Path>C:/</Path>
+    <Time>01/01/0001 00:00:00</Time>
+  </WallpaperTrigger>
+  <WallpaperTrigger>
+    <Style>Centered</Style>
+    <Path>C:/</Path>
+    <Time>01/01/0001 00:00:00</Time>
+  </WallpaperTrigger>
+  <WallpaperTrigger>
+    <Style>Centered</Style>
+    <Path>C:/</Path>
+    <Time>01/01/0001 00:00:00</Time>
+  </WallpaperTrigger>
+</ArrayOfWallpaperTrigger>

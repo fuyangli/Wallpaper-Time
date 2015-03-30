@@ -7,21 +7,37 @@
         xmlns:utils="clr-namespace:WallpaperTime_.Utils"
         xmlns:wallpaperTime="clr-namespace:WallpaperTime_"
         xmlns:tb="http://www.hardcodet.net/taskbar"
-        Title="{x:Static res:Resources.ProgramTitle}" Height="350" Width="525" Closing="OnClosing">
+        Title="{x:Static res:Resources.ProgramTitle}" 
+        Icon="Resources/Images/wallpapericon.ico"
+        Height="350" 
+        Width="525" 
+        Closing="OnClosing"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <tb:TaskbarIcon Name="TaskbarIcon" IconSource="Resources/Images/wallpapericon.ico"  ToolTipText="{x:Static res:Resources.ProgramTitle}" TrayMouseDoubleClick="OnTrayMouseDoubleClick"></tb:TaskbarIcon>  
-        <DataGrid Grid.Row="0" Margin="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="DataGridConfig"
-                  AutoGenerateColumns="False" CanUserAddRows="False" CanUserResizeColumns="False">
+        <tb:TaskbarIcon Name="TaskbarIcon" IconSource="Resources/Images/wallpapericon.ico"
+                        ToolTipText="{x:Static res:Resources.ProgramTitle}"
+                        TrayMouseDoubleClick="OnTrayMouseDoubleClick">
+            <tb:TaskbarIcon.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="{x:Static res:Resources.About}" />
+                    <Separator />
+                    <MenuItem Header="{x:Static res:Resources.Exit}" Click="ExitMenuItemClick" />
+                </ContextMenu>
+            </tb:TaskbarIcon.ContextMenu>
+        </tb:TaskbarIcon>
+        <DataGrid Grid.Row="0" Grid.Column="0" Margin="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                  Name="DataGridConfig"
+                  AutoGenerateColumns="False" CanUserAddRows="False" CanUserResizeColumns="True"
+                  CanUserSortColumns="True" CanUserReorderColumns="True">
             <DataGrid.Columns>
-                <DataGridTemplateColumn Header="{x:Static res:Resources.ImgPath}" Width="*">
+                <DataGridTemplateColumn Header="{x:Static res:Resources.ImgPath}" SortMemberPath="Name" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Grid>
@@ -29,62 +45,80 @@
                                     <ColumnDefinition />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <controls:MyTextBox ShownValue="{Binding Path, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HiddenValue="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <controls:MyTextBox
+                                    ShownValue="{Binding Path, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
+                                    HiddenValue="{Binding Name, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                    AllowDrop="True" Drop="OnTextBoxDrop" PreviewDragEnter="TextBoxOnDragOver"
+                                    PreviewDragOver="TextBoxOnDragOver" PreviewDrop="OnTextBoxDrop" />
                                 <Button Grid.Column="1" Content="..." Click="ButtonUrlPicker" DataContext="{Binding}" />
                             </Grid>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="{x:Static res:Resources.Style}">
+                <DataGridTemplateColumn Header="{x:Static res:Resources.Style}" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
+                                    <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <ComboBox utils:EnumHelper.Enum="{x:Type utils:Style}" SelectedItem="{Binding Style, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="ComboBoxInterval" IsReadOnly="True" HorizontalAlignment="Stretch" SelectedIndex="0"/>
+                                <ComboBox
+                                    SelectedValue="{Binding Style, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
+                                    x:Name="ComboBoxInterval" IsReadOnly="True" HorizontalAlignment="Stretch"
+                                    SelectedIndex="0" SelectedValuePath="Value">
+                                    <controls:ComboBoxItem Text="{x:Static res:Resources.Centered}" Value="{x:Static utils:Style.Centered}" />
+                                    <controls:ComboBoxItem Text="{x:Static res:Resources.CropToFit}" Value="{x:Static utils:Style.CropToFit}" />
+                                    <controls:ComboBoxItem Text="{x:Static res:Resources.KeepAspect}" Value="{x:Static utils:Style.KeepAspect}" />
+                                    <controls:ComboBoxItem Text="{x:Static res:Resources.Span}" Value="{x:Static utils:Style.Span}" />
+                                    <controls:ComboBoxItem Text="{x:Static res:Resources.Stretched}" Value="{x:Static utils:Style.Stretched}" />
+                                    <controls:ComboBoxItem Text="{x:Static res:Resources.Tiled}" Value="{x:Static utils:Style.Tiled}" />
+                                </ComboBox>
                             </Grid>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="{x:Static res:Resources.Interval}" Width="Auto">
+                <DataGridTemplateColumn Header="{x:Static res:Resources.Interval}" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
+                                    <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <ComboBox utils:EnumHelper.Enum="{x:Type wallpaperTime:Interval}" x:Name="ComboBoxInterval" IsReadOnly="True" Width="Auto" SelectedIndex="0"/>
+                                <ComboBox utils:EnumHelper.Enum="{x:Type wallpaperTime:Interval}"
+                                          x:Name="ComboBoxInterval" IsReadOnly="True" Width="Auto" SelectedIndex="0" />
                             </Grid>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="{x:Static res:Resources.Time}" Width="Auto">
+                </DataGridTemplateColumn >
+                <DataGridTemplateColumn Header="{x:Static res:Resources.Time}" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate >
+                        <DataTemplate>
                             <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <xctk:TimePicker Format="LongTime" Value="{Binding Time, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" MinWidth="100" />
+                                <xctk:TimePicker Format="LongTime"
+                                                 Value="{Binding Time, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
+                                                 HorizontalAlignment="Stretch" MinWidth="100" />
                             </Grid>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                
-                <DataGridTemplateColumn Header="{x:Static res:Resources.SetNow}" Width="Auto">
+
+                <DataGridTemplateColumn Header="{x:Static res:Resources.SetNow}" Width="Auto" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                <Button Content="{x:Static res:Resources.Set}" DataContext="{Binding}" Click="ButtonSetWallpaperClick" />
+                                <Button Content="{x:Static res:Resources.Set}" DataContext="{Binding}"
+                                        Click="ButtonSetWallpaperClick" />
                             </Grid>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                
+
                 <DataGridTemplateColumn Header="{x:Static res:Resources.Remove}" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -92,7 +126,22 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <Button Content="{x:Static res:Resources.Minus}" DataContext="{Binding}" Click="ButtonRemoveRowClick" />
+                                <Button Content="{x:Static res:Resources.Minus}" DataContext="{Binding}"
+                                        Click="ButtonRemoveRowClick" />
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="{x:Static res:Resources.Copy}" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Button Content="{x:Static res:Resources.Add}" DataContext="{Binding}"
+                                        Click="ButtonCopyClick" />
                             </Grid>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -100,7 +149,22 @@
 
             </DataGrid.Columns>
         </DataGrid>
-        <Button Grid.Column="1" Grid.Row="0" Content="{x:Static res:Resources.Add}" Click="ButtonNewRowClick" />
-        <Button Grid.Row="1" Grid.Column="0" Content="{x:Static res:Resources.Save}" Click="ButtonSaveClick" />
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="{x:Static res:Resources.Save}" Click="ButtonSaveClick"
+                    IsEnabled="{Binding CanSave}" />
+            <Button Grid.Column="1" Content="{x:Static res:Resources.Load}" Click="ButtonLoadClick" />
+            <Button Grid.Column="2" Content="{x:Static res:Resources.Add}" Click="ButtonNewRowClick" />
+            <StackPanel Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <CheckBox Content="{x:Static res:Resources.InitializeWithOs}" IsChecked="{Binding IsOnStart}" />
+            </StackPanel>
+        </Grid>
+
     </Grid>
 </Window>

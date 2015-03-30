@@ -4,23 +4,26 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Timers;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading;
 using System.Xml.Serialization;
 using WallpaperTime_.Annotations;
 using WallpaperTime_.Utils;
+using Timer = System.Timers.Timer;
 
 namespace WallpaperTime_ {
     [Serializable]
     public class WallpaperTrigger : INotifyPropertyChanged {
         public WallpaperTrigger() {}
 
-        [XmlIgnore] private Uri _url;
+        [XmlIgnore]
+        private FileInfo _fileInfo;
 
         [XmlIgnore]
-        public Uri Url {
-            get { return _url; }
+        public FileInfo FileInfo {
+            get { return _fileInfo; }
             set {
-                _url = value;
+                _fileInfo = value;
                 OnPropertyChanged();
             }
         }
@@ -45,26 +48,23 @@ namespace WallpaperTime_ {
 
         [XmlElement("Path")]
         public string Path {
-            get { return _url == null ? (_url = new Uri("C:\\")).AbsolutePath : _url.AbsolutePath; }
+            get { return _fileInfo == null ? "C:\\" : _fileInfo.FullName; }
             set {
-                Url = new Uri(value);
+                _fileInfo = new FileInfo(value);
                 OnPropertyChanged();
                 OnPropertyChanged("Name");
             }
         }
 
-        
         public string Name {
             get {
-                return new string(new FileInfo(_url.AbsolutePath).Name.Where(c => (char.IsLetterOrDigit(c) ||
-                                                                                   char.IsWhiteSpace(c) ||
-                                                                                   c == '-' || c == ',' || c == '.'))
-                    .ToArray());
+                return _fileInfo == null ? "" : _fileInfo.Name;
             }
         }
 
 
-        [XmlIgnore] private DateTime _time;
+        [XmlIgnore]
+        private DateTime _time;
 
 
         [XmlIgnore]
@@ -84,7 +84,8 @@ namespace WallpaperTime_ {
             set { Time = DateTime.Parse(value); }
         }
 
-        [XmlIgnore] private Timer _timer;
+        [XmlIgnore]
+        private Timer _timer;
 
         public void StartTimer() {
             _timer = new Timer();
@@ -112,7 +113,7 @@ namespace WallpaperTime_ {
         }
 
         public void SetWallpaper() {
-            Wallpaper.SetWithFade(Url, Style);
+            new Thread(() => Wallpaper.SetWithFade(_fileInfo, Style)).Start();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -123,6 +124,15 @@ namespace WallpaperTime_ {
             if (handler != null) {
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+
+        public WallpaperTrigger DeepClone() {
+            var serialiser = new XmlSerializer(typeof(WallpaperTrigger));
+            var writer = new StringWriter();
+            serialiser.Serialize(writer, this);
+            var reader = new StringReader(writer.ToString());
+            var obj = serialiser.Deserialize(reader);
+            return obj as WallpaperTrigger;
         }
     }
 }

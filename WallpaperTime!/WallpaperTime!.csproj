@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\Images\wallpapericon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Common.Logging">
       <HintPath>..\packages\Common.Logging.3.0.0\lib\net40\Common.Logging.dll</HintPath>
@@ -83,9 +86,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\ComboBoxItem.cs" />
     <Compile Include="Controls\MyTextBox.cs" />
     <Compile Include="Interval.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Utils\Cloner.cs" />
     <Compile Include="Utils\EnumHelper.cs" />
     <Compile Include="Utils\Wallpaper.cs" />
     <Compile Include="Utils\WinApi.cs" />
@@ -133,6 +138,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\wallpapericon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Configurations\Doctor Who Day.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

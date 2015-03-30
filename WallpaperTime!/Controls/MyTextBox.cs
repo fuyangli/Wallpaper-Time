@@ -48,7 +48,7 @@ namespace WallpaperTime_.Controls
                 Text = HiddenValue;
             };
             Loaded += (sender, args) => {
-                Text = ShownValue;
+                Text = HiddenValue;
             };
         }
 

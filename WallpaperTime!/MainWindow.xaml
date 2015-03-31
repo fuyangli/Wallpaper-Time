@@ -77,7 +77,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="{x:Static res:Resources.Interval}" Width="*">
+                <!--<DataGridTemplateColumn Header="{x:Static res:Resources.Interval}" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -89,7 +89,7 @@
                             </Grid>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn >
+                </DataGridTemplateColumn >-->
                 <DataGridTemplateColumn Header="{x:Static res:Resources.Time}" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -98,7 +98,7 @@
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <xctk:TimePicker Format="LongTime"
-                                                 Value="{Binding Time, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"
+                                                 Value="{Binding Time, Mode=TwoWay, UpdateSourceTrigger=LostFocus, ValidatesOnExceptions=True}"
                                                  HorizontalAlignment="Stretch" MinWidth="100" />
                             </Grid>
                         </DataTemplate>

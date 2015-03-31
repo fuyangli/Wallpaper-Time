@@ -72,9 +72,10 @@ namespace WallpaperTime_ {
             get { return _time; }
             set {
                 _time = value;
+                OnPropertyChanged();
                 StopTimer();
                 StartTimer();
-                OnPropertyChanged();
+                
             }
         }
 
@@ -91,7 +92,7 @@ namespace WallpaperTime_ {
             _timer = new Timer();
 
             var now = DateTime.Now;
-            var t = new DateTime(now.Year, now.Month, now.Day, Time.Hour, Time.Minute, Time.Second);
+            var t = new DateTime(now.Year, now.Month, now.Day, _time.Hour, _time.Minute, _time.Second);
             var ts = t - now;
             while (ts.TotalMilliseconds < 0) {
                 t = t.AddDays(1);

@@ -1,9 +1,9 @@
 ﻿<Application x:Class="WallpaperTime_.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             StartupUri="MainWindow.xaml"
+             StartupUri="MetroWindow.xaml"
              ShutdownMode="OnExplicitShutdown">
     <Application.Resources>
-         
+        
     </Application.Resources>
 </Application>

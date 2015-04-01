@@ -99,8 +99,12 @@ namespace WallpaperTime_ {
                 ts = t - now;
             }
             _timer.Interval = ts.TotalMilliseconds;
-            _timer.Elapsed += (sender, args) => { SetWallpaper(); };
-            _timer.AutoReset = true;
+            _timer.Elapsed += (sender, args) => {
+                SetWallpaper();
+                StopTimer();
+                StartTimer();
+            };
+            _timer.AutoReset = false;
             _timer.Start();
         }
 

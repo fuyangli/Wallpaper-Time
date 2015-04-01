@@ -123,6 +123,9 @@
   <data name="Add" xml:space="preserve">
     <value>+</value>
   </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
   <data name="Centered" xml:space="preserve">
     <value>Centered</value>
   </data>

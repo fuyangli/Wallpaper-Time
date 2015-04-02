@@ -192,6 +192,15 @@
   <data name="Time" xml:space="preserve">
     <value>Time</value>
   </data>
+  <data name="ToolTipLoad" xml:space="preserve">
+    <value>Load configuration file</value>
+  </data>
+  <data name="ToolTipNewRow" xml:space="preserve">
+    <value>Create new wallpaper setting!</value>
+  </data>
+  <data name="ToolTipSave" xml:space="preserve">
+    <value>Save configuration file</value>
+  </data>
   <data name="XmlConfig" xml:space="preserve">
     <value>XML Configuration</value>
   </data>

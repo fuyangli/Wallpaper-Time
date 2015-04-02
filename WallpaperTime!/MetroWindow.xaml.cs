@@ -76,7 +76,8 @@ namespace WallpaperTime_
             InitializeComponent();
             WallpaperTriggers = new ObservableCollection<WallpaperTrigger>();
             LoadData(DataGridXmlPath);
-            DataContext = this;
+            var lastItem = WallpaperTriggers.ToList().OrderBy(t => t.Time).TakeWhile(t => (t.Time - new DateTime(1,1,1, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second)).TotalMilliseconds < 0).Last();
+            lastItem?.SetWallpaper();
         }
 
         
@@ -112,25 +113,29 @@ namespace WallpaperTime_
                 {
                     return;
                 }
-                var lockObject = new object();
-                var thread = new Thread(() => {
-                    lock (lockObject)
-                    {
-                        var serialiser = new XmlSerializer(typeof(BindingList<WallpaperTrigger>));
-                        var writer = new StreamWriter(DataGridXmlPath);
-                        serialiser.Serialize(writer, ItemsControl.ItemsSource);
-                        writer.Close();
-                        writer = new StreamWriter(SaveDialog.FileName);
-                        serialiser.Serialize(writer, ItemsControl.ItemsSource);
-                        CanSave = false;
-                    }
-                });
-                thread.Start();
+                SaveOnTemp();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
+        }
+
+        public void SaveOnTemp() {
+            var lockObject = new object();
+            var thread = new Thread(() => {
+                lock (lockObject)
+                {
+                    var serialiser = new XmlSerializer(typeof(ObservableCollection<WallpaperTrigger>));
+                    var writer = new StreamWriter(DataGridXmlPath);
+                    serialiser.Serialize(writer, ItemsControl.ItemsSource);
+                    writer.Close();
+                    writer = new StreamWriter(SaveDialog.FileName);
+                    serialiser.Serialize(writer, ItemsControl.ItemsSource);
+                    CanSave = false;
+                }
+            });
+            thread.Start();
         }
 
         private void LoadData(string path)
@@ -147,6 +152,7 @@ namespace WallpaperTime_
                 reader.Close();
                 ItemsControl.ItemsSource = null;
                 ItemsControl.ItemsSource = WallpaperTriggers;
+               
             }
             catch (Exception e)
             {
@@ -212,7 +218,8 @@ namespace WallpaperTime_
             if (FileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 LoadData(FileDialog.FileName);
-                CanSave = true;
+                SaveOnTemp();
+                //CanSave = true;
             }
         }
 

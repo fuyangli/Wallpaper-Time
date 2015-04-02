@@ -25,9 +25,38 @@ namespace WallpaperTime_.Utils
         }
 
         public object ConvertBack(object value, Type targetType,
+                                  object parameter, CultureInfo culture) {
+            return null;
+        }
+    }
+
+    public sealed class TimeSpanToDateTimeConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType,
+                              object parameter, CultureInfo culture)
+        {
+            try {
+                var time = (DateTime) value;
+                return new TimeSpan(time.Hour, time.Minute, time.Second);
+            }
+            catch
+            {
+                return new TimeSpan();
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType,
                                   object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var time = (TimeSpan)value;
+                return new DateTime(time.Hours, time.Minutes, time.Seconds);
+            }
+            catch
+            {
+                return DateTime.Now;
+            }
         }
     }
 }

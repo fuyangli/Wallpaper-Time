@@ -286,6 +286,33 @@ namespace WallpaperTime_.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Load configuration file.
+        /// </summary>
+        public static string ToolTipLoad {
+            get {
+                return ResourceManager.GetString("ToolTipLoad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create new wallpaper setting!.
+        /// </summary>
+        public static string ToolTipNewRow {
+            get {
+                return ResourceManager.GetString("ToolTipNewRow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save configuration file.
+        /// </summary>
+        public static string ToolTipSave {
+            get {
+                return ResourceManager.GetString("ToolTipSave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to XML Configuration.
         /// </summary>
         public static string XmlConfig {

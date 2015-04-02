@@ -9,7 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using WallpaperTime_.Annotations;
-using Xceed.Wpf.Toolkit;
+using WallpaperTime_.Controls;
 using Button = System.Windows.Controls.Button;
 using ComboBox = System.Windows.Controls.ComboBox;
 using DataFormats = System.Windows.DataFormats;
@@ -66,9 +66,9 @@ namespace WallpaperTime_
         }
 
         private void ButtonSaveOnClick(object sender, RoutedEventArgs e) {
-            TextBoxImagePath.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-            TimePicker.GetBindingExpression(TimePicker.ValueProperty).UpdateSource();
-            ComboBoxStyle.GetBindingExpression(ComboBox.SelectedValueProperty).UpdateSource();
+            TextBoxImagePath.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+            TimePicker.GetBindingExpression(Xceed.Wpf.Toolkit.TimePicker.ValueProperty)?.UpdateSource();
+            ComboBoxStyle.GetBindingExpression(ComboBox.SelectedValueProperty)?.UpdateSource();
             Close();
         }
 

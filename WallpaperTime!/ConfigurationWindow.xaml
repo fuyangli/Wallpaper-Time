@@ -1,0 +1,108 @@
+﻿<controls:MetroWindow x:Class="WallpaperTime_.ConfigurationWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:local="clr-namespace:WallpaperTime_"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:res="clr-namespace:WallpaperTime_.Properties"
+                      xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+                      xmlns:utils="clr-namespace:WallpaperTime_.Utils"
+                      xmlns:controls1="clr-namespace:WallpaperTime_.Controls"
+                      mc:Ignorable="d"
+                      Title="ConfigurationWindow"
+                      WindowStartupLocation="CenterOwner"
+                      SaveWindowPosition="True"
+                      BorderThickness="0" GlowBrush="Black"
+                      Width="350"
+                      MinWidth="350"
+                      Height="350"
+                      MinHeight="350"
+                      DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <controls:MetroWindow.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml" />
+                <ResourceDictionary Source="/Resources/Icons.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </controls:MetroWindow.Resources>
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top" Orientation="Vertical">
+            <TextBlock>
+                <Run Text="{x:Static res:Resources.ImgPath}" />
+            </TextBlock>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox Name="TextBoxImagePath" Grid.Column="0"
+                         Text="{Binding WallpaperTrigger.Path, Mode=TwoWay, UpdateSourceTrigger=Explicit, ValidatesOnExceptions=True}" />
+                <Button Grid.Column="1" Content="..." Click="ButtonUrlPicker" />
+            </Grid>
+            <Image Stretch="Uniform" StretchDirection="Both" HorizontalAlignment="Center" VerticalAlignment="Center" Source="{Binding Text, ElementName=TextBoxImagePath, Mode=OneWay}"
+                   AllowDrop="True"
+                   Drop="ImageOnDrop"
+                   Width="200"
+                   Height="200"
+                   MinHeight="200"
+                   MinWidth="200"
+                   MaxWidth="200"
+                   MaxHeight="200"
+                   RenderOptions.BitmapScalingMode="NearestNeighbor">
+                <Image.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Open Image Outside" Click="ButtonOpenImageClick"></MenuItem>
+                        <MenuItem Header="Open Containing Folder" Click="ButtonOpenContainingFolder"></MenuItem>
+                    </ContextMenu>
+                </Image.ContextMenu>
+            </Image>
+            <TextBlock>
+                <Run Text="{x:Static res:Resources.Time}" />
+            </TextBlock>
+            <xctk:TimePicker Name="TimePicker"
+                             Value="{Binding WallpaperTrigger.Time, Mode=TwoWay, UpdateSourceTrigger=Explicit}"
+                             Height="30" />
+            <TextBlock>
+                <Run Text="{x:Static res:Resources.Style}" />
+            </TextBlock>
+            <ComboBox Name="ComboBoxStyle"
+                      SelectedValue="{Binding WallpaperTrigger.Style, Mode=TwoWay, UpdateSourceTrigger=Explicit, ValidatesOnExceptions=True}"
+                      IsReadOnly="True" HorizontalAlignment="Stretch"
+                      SelectedIndex="0" SelectedValuePath="Value">
+                <controls1:ComboBoxItem Text="{x:Static res:Resources.Centered}"
+                                        Value="{x:Static utils:Style.Centered}" />
+                <controls1:ComboBoxItem Text="{x:Static res:Resources.CropToFit}"
+                                        Value="{x:Static utils:Style.CropToFit}" />
+                <controls1:ComboBoxItem Text="{x:Static res:Resources.KeepAspect}"
+                                        Value="{x:Static utils:Style.KeepAspect}" />
+                <controls1:ComboBoxItem Text="{x:Static res:Resources.Span}" Value="{x:Static utils:Style.Span}" />
+                <controls1:ComboBoxItem Text="{x:Static res:Resources.Stretched}"
+                                        Value="{x:Static utils:Style.Stretched}" />
+                <controls1:ComboBoxItem Text="{x:Static res:Resources.Tiled}" Value="{x:Static utils:Style.Tiled}" />
+            </ComboBox>
+
+        </StackPanel>
+        <Grid DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Button Margin="5" VerticalAlignment="Bottom" VerticalContentAlignment="Bottom"
+                    Content="{x:Static res:Resources.Save}" Click="ButtonSaveOnClick" />
+            <Button Grid.Column="1" Margin="5" VerticalAlignment="Bottom" VerticalContentAlignment="Bottom"
+                    Content="{x:Static res:Resources.Cancel}" IsCancel="True" />
+        </Grid>
+    </DockPanel>
+
+</controls:MetroWindow>

@@ -313,6 +313,15 @@ namespace WallpaperTime_.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Set the right wallpaper to the actual time!.
+        /// </summary>
+        public static string ToolTipSetNow {
+            get {
+                return ResourceManager.GetString("ToolTipSetNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to XML Configuration.
         /// </summary>
         public static string XmlConfig {

@@ -60,6 +60,12 @@
                         <controls:Tile Count="{Binding Time, StringFormat={}{0:T}}"
                                        Style="{StaticResource LargeTileStyle}" Click="OnTileClick" AllowDrop="True"
                                        Drop="TileOnDrop" RenderOptions.BitmapScalingMode="NearestNeighbor">
+                            <controls:Tile.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="{x:Static res:Resources.SetNow}" Click="ButtonSetWallpaperClick" ></MenuItem>
+                                    <MenuItem Header="{x:Static res:Resources.Remove}" Click="ButtonRemoveRowClick"></MenuItem>
+                                </ContextMenu>
+                            </controls:Tile.ContextMenu>
                             <controls:Tile.Background>
                                 <ImageBrush Stretch="UniformToFill" RenderOptions.BitmapScalingMode="NearestNeighbor">
                                     <ImageBrush.ImageSource>
@@ -81,7 +87,7 @@
 
         <StackPanel Margin="5" Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Left">
             <Button ToolTip="{x:Static res:Resources.ToolTipNewRow}" Width="40" Height="40" Click="ButtonNewRowClick">
-                <controls1:Icon Style="{StaticResource Add1IconStyle}" Background="#00000000" Foreground="#FF00539C" />
+                <controls1:Icon Style="{StaticResource Add1IconStyle}" Foreground="#FF00539C" />
             </Button>
         </StackPanel>
         <StackPanel Margin="5" Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
@@ -90,6 +96,9 @@
             </Button>
             <Button ToolTip="{x:Static res:Resources.ToolTipLoad}" Width="40" Height="40" Click="ButtonLoadClick">
                 <controls1:Icon Style="{StaticResource FolderOpenIconStyle}" />
+            </Button>
+            <Button ToolTip="{x:Static res:Resources.ToolTipSetNow}" Width="40" Height="40" Click="ButtonSetNearestWallpaper">
+                <controls1:Icon Style="{StaticResource Clock2IconStyle }" Foreground="#FF00539C" />
             </Button>
         </StackPanel>
     </Grid>

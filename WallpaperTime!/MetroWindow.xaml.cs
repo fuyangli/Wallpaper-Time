@@ -22,6 +22,7 @@ using WallpaperTime_.Annotations;
 using Application = System.Windows.Application;
 using Button = System.Windows.Controls.Button;
 using DragEventArgs = System.Windows.DragEventArgs;
+using MenuItem = System.Windows.Controls.MenuItem;
 
 namespace WallpaperTime_
 {
@@ -76,7 +77,11 @@ namespace WallpaperTime_
             InitializeComponent();
             WallpaperTriggers = new ObservableCollection<WallpaperTrigger>();
             LoadData(DataGridXmlPath);
-            var lastItem = WallpaperTriggers.ToList().OrderBy(t => t.Time).TakeWhile(t => (t.Time - new DateTime(1,1,1, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second)).TotalMilliseconds < 0).Last();
+            SetNearestWallpaper();
+        }
+
+        public void SetNearestWallpaper() {
+            var lastItem = WallpaperTriggers.ToList().OrderBy(t => t.Time).TakeWhile(t => (t.Time - new DateTime(1, 1, 1, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second)).TotalMilliseconds < 0).Last();
             lastItem?.SetWallpaper();
         }
 
@@ -89,17 +94,9 @@ namespace WallpaperTime_
 
         private void ButtonRemoveRowClick(object sender, RoutedEventArgs e)
         {
-            var button = sender as Button;
-            if (button == null)
-            {
-                return;
-            }
-            var w = button.DataContext as WallpaperTrigger;
-            if (w == null)
-            {
-                return;
-            }
-            w.StopTimer();
+            var button = sender as FrameworkElement;
+            var w = button?.DataContext as WallpaperTrigger;
+            w?.StopTimer();
             WallpaperTriggers.Remove(w);
             //CanSave = true;
         }
@@ -167,16 +164,9 @@ namespace WallpaperTime_
 
         private void ButtonSetWallpaperClick(object sender, RoutedEventArgs e)
         {
-            var button = sender as Button;
-            if (button == null)
-            {
-                return;
-            }
-            var w = button.DataContext as WallpaperTrigger;
-            if (w != null)
-            {
-                w.SetWallpaper();
-            }
+            var button = (sender as FrameworkElement);
+            var w = button?.DataContext as WallpaperTrigger;
+            w?.SetWallpaper();
         }
 
         private void OnTrayMouseDoubleClick(object sender, RoutedEventArgs e)
@@ -197,7 +187,7 @@ namespace WallpaperTime_
 
         private void ButtonCopyClick(object sender, RoutedEventArgs e)
         {
-            var button = sender as Button;
+            var button = sender as FrameworkElement;
             if (button == null)
             {
                 return;
@@ -236,14 +226,18 @@ namespace WallpaperTime_
         }
 
         private void OnTileClick(object sender, RoutedEventArgs e) {
-            var configWindow = new ConfigurationWindow((sender as Tile).DataContext as WallpaperTrigger);
+            var configWindow = new ConfigurationWindow((sender as FrameworkElement)?.DataContext as WallpaperTrigger);
             configWindow.ShowDialog();
         }
 
         private void TileOnDrop(object sender, DragEventArgs e) {
-            var item = (sender as Tile).DataContext as WallpaperTrigger;
+            var item = (sender as FrameworkElement)?.DataContext as WallpaperTrigger;
             var data = e.Data.GetData(System.Windows.DataFormats.FileDrop) as String[];
             item.Path = data[0];
+        }
+
+        private void ButtonSetNearestWallpaper(object sender, RoutedEventArgs e) {
+            SetNearestWallpaper();
         }
     }
 }

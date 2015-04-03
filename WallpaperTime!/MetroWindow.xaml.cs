@@ -1,28 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Forms;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
-using MahApps.Metro.Controls;
 using WallpaperTime_.Annotations;
 using Application = System.Windows.Application;
-using Button = System.Windows.Controls.Button;
+using DataFormats = System.Windows.DataFormats;
 using DragEventArgs = System.Windows.DragEventArgs;
-using MenuItem = System.Windows.Controls.MenuItem;
 
 namespace WallpaperTime_
 {
@@ -53,7 +42,7 @@ namespace WallpaperTime_
             }
         }
 
-        
+
         public SaveFileDialog SaveDialog = new SaveFileDialog();
         public OpenFileDialog FileDialog = new OpenFileDialog();
 
@@ -72,6 +61,7 @@ namespace WallpaperTime_
         public ICollectionView WallpaperTriggersView { get; set; }
 
         public string DataGridXmlPath = Path.Combine(Path.GetTempPath(), "wallpapertriggers.xml");
+
         public MetroWindow()
         {
             InitializeComponent();
@@ -80,24 +70,46 @@ namespace WallpaperTime_
             SetNearestWallpaper();
         }
 
-        public void SetNearestWallpaper() {
-            var lastItem = WallpaperTriggers.ToList().OrderBy(t => t.Time).TakeWhile(t => (t.Time - new DateTime(1, 1, 1, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second)).TotalMilliseconds < 0).Last();
-            lastItem?.SetWallpaper();
+        public void SetNearestWallpaper()
+        {
+            try
+            {
+                if (!WallpaperTriggers.Any()) return;
+                //var lastItem = WallpaperTriggers.ToList().OrderBy(t => t.Time).TakeWhile(t => (t.Time - new DateTime(1, 1, 1, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second)).TotalMilliseconds < 0).LastOrDefault();
+                var lastItem =
+                    WallpaperTriggers.OrderBy(t => t.Time)
+                        .LastOrDefault(
+                            t =>
+                                (t.Time - new DateTime(1, 1, 1, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second))
+                                    .TotalMilliseconds < 0);
+                lastItem?.SetWallpaper();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
-        
 
-        private void ButtonNewRowClick(object sender, RoutedEventArgs e) {
+        private void ButtonNewRowClick(object sender, RoutedEventArgs e)
+        {
             WallpaperTriggers.Add(new WallpaperTrigger());
             ScrollViewerTimers.ScrollToBottom();
         }
 
         private void ButtonRemoveRowClick(object sender, RoutedEventArgs e)
         {
-            var button = sender as FrameworkElement;
-            var w = button?.DataContext as WallpaperTrigger;
-            w?.StopTimer();
-            WallpaperTriggers.Remove(w);
+            try
+            {
+                var button = sender as FrameworkElement;
+                var w = button?.DataContext as WallpaperTrigger;
+                w?.StopTimer();
+                WallpaperTriggers.Remove(w);
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+            }
             //CanSave = true;
         }
 
@@ -118,28 +130,38 @@ namespace WallpaperTime_
             }
         }
 
-        public void SaveOnTemp() {
-            var lockObject = new object();
-            var thread = new Thread(() => {
-                lock (lockObject)
+        public void SaveOnTemp()
+        {
+            try
+            {
+                var lockObject = new object();
+                var thread = new Thread(() =>
                 {
-                    var serialiser = new XmlSerializer(typeof(ObservableCollection<WallpaperTrigger>));
-                    var writer = new StreamWriter(DataGridXmlPath);
-                    serialiser.Serialize(writer, ItemsControl.ItemsSource);
-                    writer.Close();
-                    writer = new StreamWriter(SaveDialog.FileName);
-                    serialiser.Serialize(writer, ItemsControl.ItemsSource);
-                    CanSave = false;
-                }
-            });
-            thread.Start();
+                    lock (lockObject)
+                    {
+                        var serialiser = new XmlSerializer(typeof (ObservableCollection<WallpaperTrigger>));
+                        var writer = new StreamWriter(DataGridXmlPath);
+                        serialiser.Serialize(writer, ItemsControl.ItemsSource);
+                        writer.Close();
+                        writer = new StreamWriter(SaveDialog.FileName);
+                        serialiser.Serialize(writer, ItemsControl.ItemsSource);
+                        CanSave = false;
+                    }
+                });
+                thread.Start();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
         private void LoadData(string path)
         {
             try
             {
-                var serialiser = new XmlSerializer(typeof(ObservableCollection<WallpaperTrigger>));
+                if (!File.Exists(path)) return;
+                var serialiser = new XmlSerializer(typeof (ObservableCollection<WallpaperTrigger>));
                 var reader = new StreamReader(path);
                 WallpaperTriggers = serialiser.Deserialize(reader) as ObservableCollection<WallpaperTrigger>;
                 if (WallpaperTriggers != null)
@@ -149,7 +171,6 @@ namespace WallpaperTime_
                 reader.Close();
                 ItemsControl.ItemsSource = null;
                 ItemsControl.ItemsSource = WallpaperTriggers;
-               
             }
             catch (Exception e)
             {
@@ -205,12 +226,17 @@ namespace WallpaperTime_
 
         private void ButtonLoadClick(object sender, RoutedEventArgs e)
         {
-            if (FileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            try
             {
+                if (FileDialog.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
                 LoadData(FileDialog.FileName);
                 SaveOnTemp();
-                //CanSave = true;
             }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+            }
+            //CanSave = true;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -225,19 +251,43 @@ namespace WallpaperTime_
             }
         }
 
-        private void OnTileClick(object sender, RoutedEventArgs e) {
-            var configWindow = new ConfigurationWindow((sender as FrameworkElement)?.DataContext as WallpaperTrigger);
-            configWindow.ShowDialog();
+        private void OnTileClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var configWindow = new ConfigurationWindow((sender as FrameworkElement)?.DataContext as WallpaperTrigger);
+                configWindow.ShowDialog();
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+            }
         }
 
-        private void TileOnDrop(object sender, DragEventArgs e) {
-            var item = (sender as FrameworkElement)?.DataContext as WallpaperTrigger;
-            var data = e.Data.GetData(System.Windows.DataFormats.FileDrop) as String[];
-            item.Path = data[0];
+        private void TileOnDrop(object sender, DragEventArgs e)
+        {
+            try
+            {
+                var item = (sender as FrameworkElement)?.DataContext as WallpaperTrigger;
+                var data = e.Data.GetData(DataFormats.FileDrop) as String[];
+                item.Path = data[0];
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+            }
         }
 
-        private void ButtonSetNearestWallpaper(object sender, RoutedEventArgs e) {
-            SetNearestWallpaper();
+        private void ButtonSetNearestWallpaper(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                SetNearestWallpaper();
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+            }
         }
     }
 }

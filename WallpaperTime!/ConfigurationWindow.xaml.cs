@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using WallpaperTime_.Annotations;
 using WallpaperTime_.Controls;
+using Xceed.Wpf.Toolkit;
 using Button = System.Windows.Controls.Button;
 using ComboBox = System.Windows.Controls.ComboBox;
 using DataFormats = System.Windows.DataFormats;
@@ -35,26 +36,39 @@ namespace WallpaperTime_
         }
 
         public ConfigurationWindow(WallpaperTrigger item) {
-            InitializeComponent();
-            WallpaperTrigger = item;
-            Title = string.Format("{0} @ {1}", item.Name, item.Time.ToShortTimeString());
+            try
+            {
+                InitializeComponent();
+                WallpaperTrigger = item;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
             
         }
 
         private void ButtonUrlPicker(object sender, RoutedEventArgs e)
         {
-            var button = sender as Button;
-            if (button == null)
+            try
             {
-                return;
+                var button = sender as Button;
+                if (button == null)
+                {
+                    return;
+                }
+                var codecs = String.Join(";", ImageCodecInfo.GetImageEncoders().Select(c => c.FilenameExtension).ToList());
+                _fileDialog.Filter = String.Format("{0} ({1}) | {1}", Properties.Resources.ImageFiles, codecs);
+                if (_fileDialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+                {
+                    return;
+                }
+                TextBoxImagePath.Text = _fileDialog.FileName;
             }
-            var codecs = String.Join(";", ImageCodecInfo.GetImageEncoders().Select(c => c.FilenameExtension).ToList());
-            _fileDialog.Filter = String.Format("{0} ({1}) | {1}", Properties.Resources.ImageFiles, codecs);
-            if (_fileDialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+            catch (Exception exception)
             {
-                return;
+                Console.WriteLine(exception);
             }
-            TextBoxImagePath.Text = _fileDialog.FileName;
             //CanSave = true;
         }
 
@@ -66,10 +80,17 @@ namespace WallpaperTime_
         }
 
         private void ButtonSaveOnClick(object sender, RoutedEventArgs e) {
-            TextBoxImagePath.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
-            TimePicker.GetBindingExpression(Xceed.Wpf.Toolkit.TimePicker.ValueProperty)?.UpdateSource();
-            ComboBoxStyle.GetBindingExpression(ComboBox.SelectedValueProperty)?.UpdateSource();
-            Close();
+            try
+            {
+                TextBoxImagePath.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+                TimePicker.GetBindingExpression(TimePicker.ValueProperty)?.UpdateSource();
+                ComboBoxStyle.GetBindingExpression(ComboBox.SelectedValueProperty)?.UpdateSource();
+                Close();
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+            }
         }
 
         private void ButtonOpenImageClick(object sender, RoutedEventArgs e) {
@@ -92,7 +113,6 @@ namespace WallpaperTime_
         }
 
         private void ImageOnDrop(object sender, DragEventArgs e) {
-            var s = (sender as Image);
             var data = e.Data.GetData(DataFormats.FileDrop) as String[];
             TextBoxImagePath.Text = data[0];
         }

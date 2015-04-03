@@ -13,7 +13,7 @@
                       xmlns:controls="http://schemas.AvalonControls/AvalonControlsLibrary/Controls"
                       xmlns:Themes="clr-namespace:Xceed.Wpf.Toolkit.Themes;assembly=Xceed.Wpf.Toolkit" x:Class="WallpaperTime_.ConfigurationWindow"
                       mc:Ignorable="d"
-                      Title="ConfigurationWindow"
+                      Title="{Binding WallpaperTrigger.Name}"
                       WindowStartupLocation="CenterScreen"
                       BorderThickness="0"
                       Width="350"

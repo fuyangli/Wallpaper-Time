@@ -14,7 +14,10 @@ using Timer = System.Timers.Timer;
 namespace WallpaperTime_ {
     [Serializable]
     public class WallpaperTrigger : INotifyPropertyChanged {
-        public WallpaperTrigger() {}
+        public WallpaperTrigger()
+        {
+            FileInfo = new FileInfo(Path);
+        }
 
         [XmlIgnore]
         private FileInfo _fileInfo;
@@ -48,19 +51,15 @@ namespace WallpaperTime_ {
 
         [XmlElement("Path")]
         public string Path {
-            get { return _fileInfo == null ? "C:\\" : _fileInfo.FullName; }
+            get { return _fileInfo?.FullName ?? @"C:\"; }
             set {
-                _fileInfo = new FileInfo(value);
+                FileInfo = new FileInfo(value);
                 OnPropertyChanged();
                 OnPropertyChanged("Name");
             }
         }
 
-        public string Name {
-            get {
-                return _fileInfo == null ? "" : _fileInfo.Name;
-            }
-        }
+        public string Name => _fileInfo?.Name ?? "";
 
 
         [XmlIgnore]
@@ -75,7 +74,6 @@ namespace WallpaperTime_ {
                 OnPropertyChanged();
                 StopTimer();
                 StartTimer();
-                
             }
         }
 
@@ -89,36 +87,54 @@ namespace WallpaperTime_ {
         private Timer _timer;
 
         public void StartTimer() {
-            _timer = new Timer();
+            try
+            {
+                _timer = new Timer();
 
-            var now = DateTime.Now;
-            var t = new DateTime(now.Year, now.Month, now.Day, _time.Hour, _time.Minute, _time.Second);
-            var ts = t - now;
-            while (ts.TotalMilliseconds < 0) {
-                t = t.AddDays(1);
-                ts = t - now;
+                var now = DateTime.Now;
+                var t = new DateTime(now.Year, now.Month, now.Day, _time.Hour, _time.Minute, _time.Second);
+                var ts = t - now;
+                while (ts.TotalMilliseconds < 0) {
+                    t = t.AddDays(1);
+                    ts = t - now;
+                }
+                _timer.Interval = ts.TotalMilliseconds;
+                _timer.Elapsed += (sender, args) => {
+                                                        SetWallpaper();
+                                                        StopTimer();
+                                                        StartTimer();
+                };
+                _timer.AutoReset = false;
+                _timer.Start();
             }
-            _timer.Interval = ts.TotalMilliseconds;
-            _timer.Elapsed += (sender, args) => {
-                SetWallpaper();
-                StopTimer();
-                StartTimer();
-            };
-            _timer.AutoReset = false;
-            _timer.Start();
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
         public void StopTimer() {
-            if (_timer == null) {
-                return;
+            try
+            {
+                if (_timer == null) {
+                    return;
+                }
+                _timer.Stop();
+                _timer.Dispose();
+                _timer = null;
             }
-            _timer.Stop();
-            _timer.Dispose();
-            _timer = null;
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
         public void SetWallpaper() {
-            new Thread(() => Wallpaper.SetWithFade(_fileInfo, Style)).Start();
+            new Thread(() =>
+            {
+                if (_fileInfo == null || !_fileInfo.Exists) return;
+                Wallpaper.SetWithFade(_fileInfo, Style);
+            }).Start();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -132,12 +148,20 @@ namespace WallpaperTime_ {
         }
 
         public WallpaperTrigger DeepClone() {
-            var serialiser = new XmlSerializer(typeof(WallpaperTrigger));
-            var writer = new StringWriter();
-            serialiser.Serialize(writer, this);
-            var reader = new StringReader(writer.ToString());
-            var obj = serialiser.Deserialize(reader);
-            return obj as WallpaperTrigger;
+            try
+            {
+                var serialiser = new XmlSerializer(typeof(WallpaperTrigger));
+                var writer = new StringWriter();
+                serialiser.Serialize(writer, this);
+                var reader = new StringReader(writer.ToString());
+                var obj = serialiser.Deserialize(reader);
+                return obj as WallpaperTrigger;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
         }
     }
 }

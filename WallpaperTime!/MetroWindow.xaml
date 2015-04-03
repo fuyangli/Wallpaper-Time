@@ -57,7 +57,7 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <controls:Tile Count="{Binding Time, StringFormat={}{0:T}}"
+                        <controls:Tile Count="{Binding Time, StringFormat={}{0:T}, Mode=OneWay}"
                                        Style="{StaticResource LargeTileStyle}" Click="OnTileClick" AllowDrop="True"
                                        Drop="TileOnDrop" RenderOptions.BitmapScalingMode="NearestNeighbor">
                             <controls:Tile.ContextMenu>

@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using WallpaperTime_.Annotations;
+using WallpaperTime_.Utils;
 using Application = System.Windows.Application;
 using DataFormats = System.Windows.DataFormats;
 using DragEventArgs = System.Windows.DragEventArgs;
@@ -55,13 +56,16 @@ namespace WallpaperTime_
             {
                 _wallpaperTriggers = value;
                 OnPropertyChanged();
+                OnPropertyChanged("WallpaperTriggersHasSomething");
             }
         }
+
+        public bool WallpaperTriggersHasSomething => WallpaperTriggers.HasSomething();
 
         public ICollectionView WallpaperTriggersView { get; set; }
 
         public string DataGridXmlPath = Path.Combine(Path.GetTempPath(), "wallpapertriggers.xml");
-
+         
         public MetroWindow()
         {
             InitializeComponent();
@@ -166,7 +170,11 @@ namespace WallpaperTime_
                 WallpaperTriggers = serialiser.Deserialize(reader) as ObservableCollection<WallpaperTrigger>;
                 if (WallpaperTriggers != null)
                 {
-                    WallpaperTriggers.CollectionChanged += (sender, args) => { CanSave = true; };
+                    WallpaperTriggers.CollectionChanged += (sender, args) =>
+                    {
+                        OnPropertyChanged("WallpaperTriggers");
+                        OnPropertyChanged("WallpaperTriggersHasSomething");
+                    };
                 }
                 reader.Close();
                 ItemsControl.ItemsSource = null;

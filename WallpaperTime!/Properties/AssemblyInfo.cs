@@ -51,9 +51,12 @@ using System.Windows;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("15.04.03.01")]
-[assembly: AssemblyFileVersion("15.04.03.01")]
+[assembly: AssemblyVersion("15.04.05.01")]
+[assembly: AssemblyFileVersion("15.04.05.01")]
 /* 
+15.04.05.01 - Gabriel Guaitolini:
+- Fix for enabling save and setting for empty configuration
+
 15.04.03.01 - Gabriel Guaitolini:
 - Fix for setting initial wallpaper when no one is set
 - Try catchs 

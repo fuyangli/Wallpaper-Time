@@ -10,7 +10,9 @@
     xmlns:res="clr-namespace:WallpaperTime_.Properties"
     xmlns:tb="http://www.hardcodet.net/taskbar"
     xmlns:controls1="http://schemas.extra.com/ui"
-    xmlns:params="http://schemas.codeplex.com/elysium/params" x:Class="WallpaperTime_.MetroWindow"
+    xmlns:params="http://schemas.codeplex.com/elysium/params"
+    xmlns:utils="clr-namespace:WallpaperTime_.Utils"
+    x:Class="WallpaperTime_.MetroWindow"
     mc:Ignorable="d"
     Title="{x:Static res:Resources.ProgramTitle}" Height="600" Width="800"
     ResizeMode="CanResizeWithGrip"
@@ -25,6 +27,7 @@
                 <Setter Property="Height" Value="125" />
                 <Setter Property="TitleFontSize" Value="10" />
             </Style>
+            <utils:MethodToValueConverter x:Key="MethodToValueConverter"/>
         </ResourceDictionary>
     </controls1:Window.Resources>
     <Grid>
@@ -91,14 +94,14 @@
             </Button>
         </StackPanel>
         <StackPanel Margin="5" Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
-            <Button ToolTip="{x:Static res:Resources.ToolTipSave}" Width="40" Height="40" Click="ButtonSaveClick">
-                <controls1:Icon Style="{StaticResource Save1IconStyle}" />
+            <Button ToolTip="{x:Static res:Resources.ToolTipSave}" Width="40" Height="40" Click="ButtonSaveClick" IsEnabled="{Binding WallpaperTriggersHasSomething}">
+                <controls1:Icon Style="{StaticResource Save1IconStyle}" Foreground="#FF00539C" />
             </Button>
             <Button ToolTip="{x:Static res:Resources.ToolTipLoad}" Width="40" Height="40" Click="ButtonLoadClick">
-                <controls1:Icon Style="{StaticResource FolderOpenIconStyle}" />
+                <controls1:Icon Style="{StaticResource FolderOpenIconStyle}" Foreground="#FF00539C" />
             </Button>
-            <Button ToolTip="{x:Static res:Resources.ToolTipSetNow}" Width="40" Height="40" Click="ButtonSetNearestWallpaper">
-                <controls1:Icon Style="{StaticResource Clock2IconStyle }" Foreground="#FF00539C" />
+            <Button ToolTip="{x:Static res:Resources.ToolTipSetNow}" Width="40" Height="40" Click="ButtonSetNearestWallpaper" IsEnabled="{Binding WallpaperTriggersHasSomething}">
+                <controls1:Icon Style="{StaticResource Clock2IconStyle }"  IsEnabled="{Binding WallpaperTriggersHasSomething}" Foreground="#FF00539C" />
             </Button>
         </StackPanel>
     </Grid>

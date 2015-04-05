@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using Common.Logging;
 using WallpaperTime_.Annotations;
 using WallpaperTime_.Controls;
 using Xceed.Wpf.Toolkit;
@@ -67,7 +68,9 @@ namespace WallpaperTime_
             }
             catch (Exception exception)
             {
+                var log = LogManager.GetLogger("Program");
                 Console.WriteLine(exception);
+                log.Warn("UrlPicker", exception);
             }
             //CanSave = true;
         }

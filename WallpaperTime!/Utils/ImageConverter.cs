@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
+using NCrontab;
 
 namespace WallpaperTime_.Utils
 {
@@ -58,6 +59,31 @@ namespace WallpaperTime_.Utils
             {
                 return DateTime.Now;
             }
+        }
+
+    }
+
+    public sealed class CronExpressionToNextDate : IValueConverter
+    {
+        public object Convert(object value, Type targetType,
+                              object parameter, CultureInfo culture)
+        {
+            try
+            {
+                var cron = (String)value;
+                var nextDate = CrontabSchedule.Parse(cron).GetNextOccurrence((DateTime) parameter);
+                return nextDate;
+            }
+            catch
+            {
+                return new TimeSpan();
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType,
+                                  object parameter, CultureInfo culture)
+        {
+            return null;
         }
 
     }

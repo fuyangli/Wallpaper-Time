@@ -190,7 +190,7 @@
     <value>Tiled</value>
   </data>
   <data name="Time" xml:space="preserve">
-    <value>Time</value>
+    <value>Time (Using Cron Expression)</value>
   </data>
   <data name="ToolTipLoad" xml:space="preserve">
     <value>Load configuration file</value>

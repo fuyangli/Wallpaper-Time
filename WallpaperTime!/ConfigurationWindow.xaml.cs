@@ -86,7 +86,7 @@ namespace WallpaperTime_
             try
             {
                 TextBoxImagePath.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
-                TimePicker.GetBindingExpression(TimePicker.ValueProperty)?.UpdateSource();
+                TextBoxTimeCron.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
                 ComboBoxStyle.GetBindingExpression(ComboBox.SelectedValueProperty)?.UpdateSource();
                 Close();
             }

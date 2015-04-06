@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
@@ -8,6 +9,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using NCrontab;
 using WallpaperTime_.Annotations;
 using WallpaperTime_.Utils;
 using Application = System.Windows.Application;
@@ -80,12 +82,14 @@ namespace WallpaperTime_
             {
                 if (!WallpaperTriggers.Any()) return;
                 //var lastItem = WallpaperTriggers.ToList().OrderBy(t => t.Time).TakeWhile(t => (t.Time - new DateTime(1, 1, 1, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second)).TotalMilliseconds < 0).LastOrDefault();
-                var lastItem =
-                    WallpaperTriggers.OrderBy(t => t.Time)
-                        .LastOrDefault(
-                            t =>
-                                (t.Time - new DateTime(1, 1, 1, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second))
-                                    .TotalMilliseconds < 0);
+                //var lastItem =
+                //    WallpaperTriggers.OrderBy(t => t.Time)
+                //        .LastOrDefault(
+                //            t =>
+                //                (t.Time - new DateTime(1, 1, 1, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second))
+                //                    .TotalMilliseconds < 0);
+                var since = DateTime.Parse(App.GetDataKey("LastDateItemSet").ToString()).AddYears(-1);
+                var lastItem = WallpaperTriggers.OrderBy(t => CrontabSchedule.Parse(t.CronExpression).GetNextOccurrences(since, DateTime.Now).Last()).LastOrDefault();
                 lastItem?.SetWallpaper();
             }
             catch (Exception e)

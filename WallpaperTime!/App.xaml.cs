@@ -13,12 +13,14 @@ namespace WallpaperTime_ {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App  {
+    public partial class App
+    {
         public App() {
             FrameworkElement.LanguageProperty.OverrideMetadata(
                 typeof (FrameworkElement),
                 new FrameworkPropertyMetadata(
                     XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
+            
         }
 
         public static void RegisterInStartup(bool isChecked) {
@@ -41,6 +43,21 @@ namespace WallpaperTime_ {
                 return registryKey.GetValue("ApplicationName", null) != null;
             }
             return false;
+        }
+
+        public static void WriteKey(string key, object value)
+        {
+            var registryKey = Registry.CurrentUser.CreateSubKey("Wallpaper Time!");
+            registryKey?.SetValue(key, value);
+            registryKey?.Close();
+        }
+
+        public static object GetDataKey(string key)
+        {
+            var registryKey = Registry.CurrentUser.CreateSubKey("Wallpaper Time!");
+            var value = registryKey?.GetValue(key);
+            registryKey?.Close();
+            return value;
         }
     }
 }

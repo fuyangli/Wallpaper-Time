@@ -13,15 +13,20 @@
                       xmlns:controls="http://schemas.AvalonControls/AvalonControlsLibrary/Controls"
                       xmlns:Themes="clr-namespace:Xceed.Wpf.Toolkit.Themes;assembly=Xceed.Wpf.Toolkit" x:Class="WallpaperTime_.ConfigurationWindow"
                       mc:Ignorable="d"
-                      Title="{Binding WallpaperTrigger.Name}"
                       WindowStartupLocation="CenterScreen"
                       BorderThickness="0"
                       Width="350"
                       MinWidth="350"
-                      Height="415"
+                      Height="430"
                       MinHeight="350"
                       ResizeMode="NoResize"
                       DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <extra:Window.Title>
+        <MultiBinding StringFormat="{}{0} | {1}">
+            <Binding Path="WallpaperTrigger.Name"></Binding>
+            <Binding Path="WallpaperTrigger.CronExpression"></Binding>
+        </MultiBinding>
+    </extra:Window.Title>
     <extra:Window.Resources>
         <utils:TimeSpanToDateTimeConverter x:Key="TimeSpanToDateTimeConverter" />
         <Style x:Key="TimePickerStyle" TargetType="{x:Type xctk:TimePicker}">
@@ -31,8 +36,37 @@
                 </Style>
             </Style.Resources>
         </Style>
+        <Style x:Key="placeHolder" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Grid>
+                            <TextBox Text="{Binding Path=Text,
+                                                RelativeSource={RelativeSource TemplatedParent}, 
+                                                Mode=TwoWay,
+                                                UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center"
+                                 x:Name="textSource" 
+                                 Background="Transparent" 
+                                 Panel.ZIndex="2" />
+                            <TextBox Text="{TemplateBinding Tag}" Background="{TemplateBinding Background}" Panel.ZIndex="1" VerticalContentAlignment="Center">
+                                <TextBox.Style>
+                                    <Style TargetType="{x:Type TextBox}">
+                                        <Setter Property="Foreground" Value="Transparent"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=Text, Source={x:Reference textSource}}" Value="">
+                                                <Setter Property="Foreground" Value="LightGray"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </extra:Window.Resources>
-    <DockPanel Margin="5">
+    <DockPanel Margin="5" >
         <StackPanel DockPanel.Dock="Top" Orientation="Vertical">
             <TextBlock><Run Text="{x:Static res:Resources.ImgPath}" /></TextBlock>
             <Grid>
@@ -40,9 +74,9 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <TextBox x:Name="TextBoxImagePath" Grid.Column="0"
+                <TextBox x:Name="TextBoxImagePath" Grid.Column="0" Tag="C:\"  Style="{StaticResource placeHolder}" 
 					Text="{Binding WallpaperTrigger.Path, Mode=TwoWay, UpdateSourceTrigger=Explicit, ValidatesOnExceptions=True}" />
-                <Button Grid.Column="1" Content="..." Click="ButtonUrlPicker" MinWidth="10" />
+                <Button Grid.Column="1" Content="..." Click="ButtonUrlPicker" MinWidth="10" Height="30" />
             </Grid>
             <Image Stretch="Uniform" 
 				Source="{Binding Text, ElementName=TextBoxImagePath, Mode=OneWay}"
@@ -58,14 +92,15 @@
                 </Image.ContextMenu>
             </Image>
             <TextBlock><Run Text="{x:Static res:Resources.Time}" /></TextBlock>
-            <xctk:TimePicker x:Name="TimePicker"
+            <TextBox x:Name="TextBoxTimeCron" Style="{StaticResource placeHolder}" Tag="[00-59|*] [00-23|*] [1-31|*] [1-12|*] [0-6|*]" ToolTip="[00-59|*] [00-23|*] [1-31|*] [1-12|*] [0-6|*]" Text="{Binding WallpaperTrigger.CronExpression, Mode=TwoWay, UpdateSourceTrigger=Explicit, ValidatesOnExceptions=True}" MinHeight="30"/>
+            <!--<xctk:TimePicker x:Name="TimePicker"
 				Value="{Binding WallpaperTrigger.Time, Mode=TwoWay, UpdateSourceTrigger=Explicit}"
-				Height="30" Style="{DynamicResource TimePickerStyle}"/>
+				Height="30" Style="{DynamicResource TimePickerStyle}"/>-->
             <TextBlock><Run Text="{x:Static res:Resources.Style}" /></TextBlock>
             <ComboBox x:Name="ComboBoxStyle"
 				SelectedValue="{Binding WallpaperTrigger.Style, Mode=TwoWay, UpdateSourceTrigger=Explicit, ValidatesOnExceptions=True}"
 				IsReadOnly="True" HorizontalAlignment="Stretch"
-				SelectedIndex="0" SelectedValuePath="Value">
+				SelectedIndex="0" SelectedValuePath="Value" Height="30">
                 <mycontrols:ComboBoxItem Text="{x:Static res:Resources.Centered}"
 					Value="{x:Static utils:Style.Centered}" />
                 <mycontrols:ComboBoxItem Text="{x:Static res:Resources.CropToFit}"
